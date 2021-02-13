@@ -11,4 +11,9 @@ class Player(pygame.spire.Sprite):
     super().__init__()
     self.image = pygame.image.load("YellowFish.png")
     self.surf = pygame.Surface((40,40))
-    self.rect = self.surf.get_rect(center = (0,))
+    self.rect = self.surf.get_rect(center = (0,640))
+  def move(self):
+    keyPress = pygame.key.get_pressed()
+    if pressed_keys[K_SPACE]:
+      self.rect.move_ip(0,5)
+  
