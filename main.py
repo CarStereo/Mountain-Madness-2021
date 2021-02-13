@@ -31,7 +31,7 @@ pygame.display.set_caption("Game")
 
 #creating the fish
 P1 = fish.Player()
-gravity = 1
+gravity = 5
 velocity = 0
 while True:
   #Cycles through all events occurring  
@@ -42,8 +42,10 @@ while True:
  
     screen.blit(background, (0,0))     
     screen.blit(P1.image,P1.rect)
-    P1.move(gravity,velocity)
-    
+    P1.move()
+    velocity = 0
+    velocity += gravity
+    P1.rect.centery += velocity
     pygame.display.update()
     FramePerSec.tick(FPS)
 
