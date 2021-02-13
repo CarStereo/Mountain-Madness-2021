@@ -41,7 +41,7 @@ def rotate_bird(fish):
 	new_fish = pygame.transform.rotozoom(fish,-fish_movement * 3,1)
 	return new_fish
 
-  def fish_animation():
+def fish_animation():
 	new_fish = fish_frames[fish_index]
 	new_fish_rect = new_fish.get_rect(center = (100,fish_rect.centery))
 	return new_fish,new_fish_rect
