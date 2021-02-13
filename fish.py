@@ -6,7 +6,7 @@ import random, time
 #tilts up and down
 #with going up it goes 45 degrees
 #with going down it goes 45 degrees down 
-class Player(pygame.spire.Sprite):
+class Player(pygame.sprite.Sprite):
   def __init__(self):
     super().__init__()
     self.image = pygame.image.load("YellowFish.png")
@@ -16,4 +16,5 @@ class Player(pygame.spire.Sprite):
     keyPress = pygame.key.get_pressed()
     if pressed_keys[K_SPACE]:
       self.rect.move_ip(0,5)
-  
+
+
