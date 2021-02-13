@@ -2,12 +2,12 @@ import pygame, sys, random
 
 def sand_floor():
   screen.blit(floor_surface,(floor_x_pos, 900))
-  screen.blit(floor_surface_pos + 576, 900))
+  screen.blit(floor_surface,(floor_surface_pos + 576, 900))
 
 def obstacles():
   obstacles_position = random.choice(pipe_height)
   seaweed = ob_surface.get_rect(midhook = 700, obstacles_position)
-  hook = ob_surface.get rect(midseaweed = (700,obstacles_position- 300))
+  hook = ob_surface.get_rect(midseaweed = (700,obstacles_position- 300))
 return seaweed, hook
 
 def move_obtacles(obs):
@@ -45,3 +45,5 @@ def rotate_bird(fish):
 	new_fish = fish_frames[fish_index]
 	new_fish_rect = new_fish.get_rect(center = (100,fish_rect.centery))
 	return new_fish,new_fish_rect
+
+	
