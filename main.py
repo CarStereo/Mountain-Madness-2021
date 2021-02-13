@@ -17,12 +17,10 @@ SPEED = 5
 SCORE = 0
  
 #Setting up Fonts
-font = pygame.font.SysFont("Verdana", 60)
-fontSmall = pygame.font.SysFont("Verdana", 20)
-background = pygame.image.load("")
-ground = pygame.image.load("ground.png")
-mainTitle = pygame.image.load("")
-background = pygame.image.load("AnimatedStreet.jpg") 
+background = pygame.image.load("ASSETS/background.png")
+ground = pygame.image.load("ASSETS/ground.png")
+gameOver = pygame.image.load("ASSETS/gameover.png")
+mainTitle = pygame.image.load("ASSETS/flippyfish.png")
 #Create a white screen 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
