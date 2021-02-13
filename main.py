@@ -3,6 +3,12 @@ import pygame, sys
 from pygame.locals import *
 import random, time
 import fish
+#import score
+
+def texts(score):
+  font=pygame.font.Font(None,30)
+  scoretext=font.render("Score: "+str(score), 1,(0,0,0))
+  screen.blit(scoretext, (0, 0))
 
 #Initializing 
 pygame.init()
@@ -41,6 +47,7 @@ while True:
             sys.exit()
  
     screen.blit(background, (0,0))     
+    texts(SCORE)
     screen.blit(P1.image,P1.rect)
     P1.move()
     velocity = 0
