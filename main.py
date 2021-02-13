@@ -1,7 +1,8 @@
+#
 import pygame, sys
 from pygame.locals import *
 import random, time
-import fish.py
+import fish
 
 #Initializing 
 pygame.init()

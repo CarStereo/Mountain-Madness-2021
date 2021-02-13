@@ -1,2 +1,2 @@
 language = "pygame"
-run = "pygame main.py"
+run = "python main.py"
