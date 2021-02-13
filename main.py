@@ -28,6 +28,9 @@ screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
 pygame.display.set_caption("Game")
 
+#creating the fish
+P1 = fish.Player()
+
 while True:
   #Cycles through all events occurring  
     for event in pygame.event.get():    
@@ -36,7 +39,8 @@ while True:
             sys.exit()
  
     screen.blit(background, (0,0))     
-         
+    screen.blit(P1.image,P1.rect)
+    P1.move()
     pygame.display.update()
     FramePerSec.tick(FPS)
 

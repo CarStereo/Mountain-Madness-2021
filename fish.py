@@ -9,12 +9,13 @@ import random, time
 class Player(pygame.sprite.Sprite):
   def __init__(self):
     super().__init__()
-    self.image = pygame.image.load("YellowFish.png")
+    self.image = pygame.image.load("ASSETS/YellowFish.png")
     self.surf = pygame.Surface((40,40))
-    self.rect = self.surf.get_rect(center = (0,640))
+    self.rect = self.surf.get_rect(center = (180,640))
   def move(self):
     keyPress = pygame.key.get_pressed()
-    if pressed_keys[K_SPACE]:
-      self.rect.move_ip(0,5)
+    if keyPress[K_SPACE]:
+      self.rect.move_ip(0,-10)
 
+def gravity()
 
