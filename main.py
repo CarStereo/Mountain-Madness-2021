@@ -19,10 +19,12 @@ SCORE = 0
 #Setting up Fonts
 font = pygame.font.SysFont("Verdana", 60)
 fontSmall = pygame.font.SysFont("Verdana", 20)
-gameOver = pygame.image.load()
+background = pygame.image.load("")
+ground = pygame.image.load("ground.png")
+mainTitle = pygame.image.load("")
 background = pygame.image.load("AnimatedStreet.jpg") 
 #Create a white screen 
-DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-DISPLAYSURF.fill(WHITE)
+screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+
 pygame.display.set_caption("Game")
 
