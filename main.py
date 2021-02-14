@@ -103,19 +103,26 @@ while True:
   #Cycles through all events occurring  
     for event in pygame.event.get():    
         if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
+        pygame.quit()
+        sys.exit()
 
         if event.type == SPAWNHOOK:
           hookList.extend(obstacles())
+          
+        if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_SPACE and  not isJumping:
+            isJumping = True
+          elif isJumping:
+            isJumping = False
+        if event.type == pygame.KEYUP:
+          isJumping = False
 
+    velocity = P1.jump(isJumping)
+    velocity += gravity
     screen.blit(background, (0,0))     
     texts(SCORE)
     screen.blit(P1.image,P1.rect)
     screen.blit(ground, (0,500))
-    P1.jump(True)
-    velocity = 0
-    velocity += gravity
     hookList = moveObstacles(hookList)
     hookList = removeObstacles(hookList)
     drawObstacles(hookList)
