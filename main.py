@@ -221,8 +221,9 @@ while True:
             paused(pause)
           if event.key == pygame.K_ESCAPE and not isAlive:
             gameState = 'main game'
-            SCORE = 0
             isAlive = True
+            P1 = fish.Player()
+            SCORE = 0
     
     screen.blit(background, (0,0)) 
     screen.blit(ground, (0,525))
