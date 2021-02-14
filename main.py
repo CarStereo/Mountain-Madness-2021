@@ -34,6 +34,7 @@ def scoreUpdate(obs):
       return 5
   return 0
 
+
 def sand_floor():
 	screen.blit(ground,(floor_x_pos,900))
 	screen.blit(ground,(floor_x_pos + 576,900))
@@ -106,6 +107,30 @@ def fish_animation():
 	P1 = fish_frames[fish_index]
 	new_P1.rect = P1.get_rect(center = (100,P1.rect.centery))
 	return P1,new_P1.rect
+
+def paused():
+
+  largeText = pygame.font.SysFont("comicsansms",115)
+  TextSurf, TextRect = text_objects("Paused", largeText)
+  TextRect.center = ((display_width/2),(display_height/2))
+  gameDisplay.blit(TextSurf, TextRect)
+
+
+  while pause:
+      for event in pygame.event.get():
+
+          if event.type == pygame.QUIT:
+              pygame.quit()
+              quit()
+
+        #gameDisplay.fill(white)
+
+
+      button("Continue",150,450,100,50,green,bright_green,unpause)
+      button("Quit",550,450,100,50,red,bright_red,quitgame)
+
+      pygame.display.update()
+      clock.tick(15)
 
 #Initializing 
 pygame.init()
@@ -188,11 +213,15 @@ while True:
           if event.key == pygame.K_SPACE and not isJumping:
             gameState = 'main game'
             isJumping = True
-            
           elif isJumping:
             isJumping = False
         if event.type == pygame.KEYUP:
           isJumping = False
+
+        if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_p:
+            pause = True
+            paused()
     
     screen.blit(background, (0,0)) 
     screen.blit(ground, (0,525))
