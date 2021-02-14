@@ -8,32 +8,38 @@ import fish
 def texts(score):
   font=pygame.font.Font(None,30)
   scoretext=font.render("Score: "+str(score), 1,(0,0,0))
-  screen.blit(scoretext, (0, 0))
+  screen.blit(scoretext, (SCREEN_WIDTH/2, 0))
+
 def sand_floor():
 	screen.blit(ground,(floor_x_pos,900))
 	screen.blit(ground,(floor_x_pos + 576,900))
 
 def obstacles():
-  obstacles_position = random.choice(pipe_height)
-  seaweed = ob_surface.get_rect(midhook = (700, obstacles_position))
-  hook = ob_surface.get_rect(midseaweed = (700,obstacles_position - 300))
-  return seaweed, hook
+  obstaclesHeight = random.randrange(200,500)
+  weed = seaweed.get_rect(midtop = (SCREEN_WIDTH, obstaclesHeight))
+  hook = fishHook.get_rect(midbottom = (SCREEN_WIDTH,obstaclesHeight - 150))
+  return weed, hook
 
-def move_obtacles(obs):
+def moveObstacles(obs):
   for ob in obs:
     ob.centerx -= 5
   visible_obstacles = [ob for ob in obs if ob.right > -50]
   return visible_obstacles
 
-def draw_obtacles(obs):
+def drawObstacles(obs):
   for ob in obs:
-    if ob.bottom >= 1024:
-      screen.blit(ob_surface, ob)
+    if ob.bottom >= SCREEN_HEIGHT:
+      screen.blit(seaweed, ob)
     else:
-      flip_ob = pygame.transform.flip(ob_surface, False, True)
-      screen.blit(flip_ob,ob)
+      screen.blit(fishHook,ob)
 
-def check_collision(obs):
+def removeObstacles(obs):
+  for ob in obs:
+    if ob.centerx <= -26:
+        hookList.remove(ob)
+  return obs
+
+def checkCollision(obs):
   global can_score
   for ob in obs:
     if fish_rect.colliderect(ob):
@@ -46,6 +52,15 @@ def check_collision(obs):
     
     return True
 
+def rotate_bird(fish):
+	new_fish = pygame.transform.rotozoom(fish,-fish_movement * 3,1)
+	return new_fish
+
+def fish_animation():
+	new_fish = fish_frames[fish_index]
+	new_fish_rect = new_fish.get_rect(center = (100,fish_rect.centery))
+	return new_fish,new_fish_rect
+
 #Initializing 
 pygame.init()
  
@@ -55,7 +70,7 @@ FramePerSec = pygame.time.Clock()
  
 #screen
 SCREEN_WIDTH = 450
-SCREEN_HEIGHT = 800
+SCREEN_HEIGHT = 600
 SPEED = 5
 SCORE = 0
  
@@ -63,25 +78,36 @@ SCORE = 0
 background = pygame.image.load("ASSETS/background.png")
 background = pygame.transform.scale(background,(SCREEN_WIDTH,SCREEN_HEIGHT))
 ground = pygame.image.load("ASSETS/ground.png")
+floor_x_pos = 0
 gameOver = pygame.image.load("ASSETS/gameover.png")
 mainTitle = pygame.image.load("ASSETS/flippyfish.png")
-
+fishHook = pygame.image.load("ASSETS/Fish Hook.png")
+seaweed = pygame.image.load("ASSETS/Seaweed.png")
 #Create a white screen 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-
 pygame.display.set_caption("Game")
+
+#Getting Obstacles to work
+
+hookList = []
+SPAWNHOOK = pygame.USEREVENT
+pygame.time.set_timer(SPAWNHOOK, 2000)
+
 
 #creating the fish
 P1 = fish.Player()
-gravity = 3
+gravity = 5
 velocity = 0
-isJumping = False
+fish_movement = 0
 while True:
   #Cycles through all events occurring  
     for event in pygame.event.get():    
         if event.type == QUIT:
-          pygame.quit()
-          sys.exit()
+        pygame.quit()
+        sys.exit()
+
+        if event.type == SPAWNHOOK:
+          hookList.extend(obstacles())
           
         if event.type == pygame.KEYDOWN:
           if event.key == pygame.K_SPACE and  not isJumping:
@@ -96,7 +122,10 @@ while True:
     screen.blit(background, (0,0))     
     texts(SCORE)
     screen.blit(P1.image,P1.rect)
+    screen.blit(ground, (0,500))
+    hookList = moveObstacles(hookList)
+    hookList = removeObstacles(hookList)
+    drawObstacles(hookList)
     P1.rect.centery += velocity
     pygame.display.update()
     FramePerSec.tick(FPS)
-
