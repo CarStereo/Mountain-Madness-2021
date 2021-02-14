@@ -26,11 +26,18 @@ def menus(score, state):
 
   
 
-def scoreUpdate(obs):
+def scoreUpdate(obs, s):
   #obs is an array of the obstacles
   #add points if an obstacle makes it past the fishes postion
+  
   for ob in obs:
     if ob.centerx < SCREEN_WIDTH / 4 and ob.centerx > (SCREEN_WIDTH /4) - 10:
+      fishString = fishColours.pop(0)
+      #change the fish
+      P1.image = pygame.image.load(fishString)
+      P1.image = pygame.transform.scale2x(P1.image)
+      P1.surf = pygame.Surface((40,40))
+      fishColours.append(fishString)
       return 5
   return 0
 
@@ -172,7 +179,11 @@ gravity = 5
 velocity = 0
 fish_movement = 0
 isJumping = False
+fishColours = ["ASSETS/YellowFish.png", "ASSETS/OrangeFish.png", "ASSETS/GreenFish.png", "ASSETS/FullGreenFish.png", "ASSETS/PurpleFish.png", "ASSETS/BlueFish.png"]
 
+def checkColour(s):
+  return
+    
 #score tracking
 SCORE = 0
 HIGHSCORE = 0
@@ -236,15 +247,16 @@ while True:
       hookList = removeObstacles(hookList)
       drawObstacles(hookList)
       isAlive = checkCollision(hookList) 
-      newScore = scoreUpdate(hookList)
+      newScore = scoreUpdate(hookList,SCORE)
       SCORE += newScore
-      
       menus(SCORE,gameState)
+      checkColour(SCORE)
 
     else:
       #bird died
       gameState = 'game over'
       HIGHSCORE = updateHighScore(HIGHSCORE,SCORE)
+      HIGHSCORE = SCORE
       menus(SCORE, gameState)
 
   
