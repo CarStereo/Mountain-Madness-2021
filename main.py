@@ -75,20 +75,28 @@ pygame.display.set_caption("Game")
 P1 = fish.Player()
 gravity = 5
 velocity = 0
-
+isJumping = False
 while True:
   #Cycles through all events occurring  
     for event in pygame.event.get():    
         if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
- 
+          pygame.quit()
+          sys.exit()
+        if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_SPACE and  not isJumping:
+            isJumping = True
+          elif isJumping:
+            isJumping = False
+        if event.type == pygame.KEYUP:
+          isJumping = False
+
+    velocity = P1.jump(isJumping)
+    if velocity == 0:
+      jumpTime = 0
+      velocity += gravity
     screen.blit(background, (0,0))     
     texts(SCORE)
     screen.blit(P1.image,P1.rect)
-    velocity = P1.move()
-    if velocity == 0:
-      velocity += gravity
     P1.rect.centery += velocity
     pygame.display.update()
     FramePerSec.tick(FPS)
