@@ -82,6 +82,7 @@ while True:
         if event.type == QUIT:
           pygame.quit()
           sys.exit()
+          
         if event.type == pygame.KEYDOWN:
           if event.key == pygame.K_SPACE and  not isJumping:
             isJumping = True
