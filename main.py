@@ -18,7 +18,7 @@ def menus(score, highscore, state):
     screen.blit(scoreSurface,scoreRect)
     gameOverRect = gameOver.get_rect(center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
     screen.blit(gameOver, gameOverRect) 
-    highScoreSurf = font.render("High Score: "+str(HIGHSCORE),1,(255, 198, 0, 255))
+    highScoreSurf = font.render("High Score: "+str(highscore),1,(255, 198, 0, 255))
     highScoreRect = highScoreSurf.get_rect(center = (SCREEN_WIDTH/2,SCREEN_WIDTH/3))
     screen.blit(highScoreSurf,highScoreRect)
   else:
@@ -97,19 +97,17 @@ def updateHighScore(hs,s):
   file = open("scores.txt", "w")
   if(hs < s):
     file.truncate()
-    file.write(str(hs))
+    file.write(str(s))
     file.close()
     return s
   else:
     filesize = os.path.getsize("scores.txt")
     if filesize == 0:
       file.truncate()
-      file.write(str(s))
+      file.write(str(hs))
       file.close()
-      return s
-    else:
-      oldHs = file.read()
-      return oldHs
+      return hs
+  
 
 
 #do not know if we are going to implement
@@ -257,8 +255,8 @@ while True:
       #bird died
       gameState = 'game over'
       HIGHSCORE = updateHighScore(HIGHSCORE,SCORE)
-      if(HIGHSCORE < SCORE):
-        HIGHSCORE = SCORE
+      #if(HIGHSCORE < SCORE):
+      # HIGHSCORE = SCORE
       menus(SCORE,HIGHSCORE, gameState)
           
   
