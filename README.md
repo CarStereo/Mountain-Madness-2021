@@ -1,4 +1,7 @@
 # Mountain-Madness-2021
-Flappy Bird but Dr Seuss
 
-Include steps to run
+Team Name: School of Floopers
+Team Members: Sunil Mann, Chance Wijewardena, Elaine Luu, Megan Poteryko, Akash Malhi
+Date: 2021-02-13
+
+
