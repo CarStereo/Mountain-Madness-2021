@@ -15,7 +15,7 @@ def sand_floor():
 	screen.blit(ground,(floor_x_pos + 576,900))
 
 def obstacles():
-  obstaclesHeight = random.randrange(100,700)
+  obstaclesHeight = random.randrange(200,500)
   weed = seaweed.get_rect(midtop = (SCREEN_WIDTH, obstaclesHeight))
   hook = fishHook.get_rect(midbottom = (SCREEN_WIDTH,obstaclesHeight - 150))
   return weed, hook
@@ -98,6 +98,7 @@ pygame.time.set_timer(SPAWNHOOK, 2000)
 P1 = fish.Player()
 gravity = 5
 velocity = 0
+fish_movement = 0
 while True:
   #Cycles through all events occurring  
     for event in pygame.event.get():    
