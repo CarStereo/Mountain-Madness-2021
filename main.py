@@ -5,7 +5,7 @@ import random, time
 import fish
 #import score
 
-def menus(score, state):
+def menus(score, highscore, state):
   font = pygame.font.Font("ASSETS/GrinchedRegular.otf", 30)
   if state == 'main game':
     scoreText = font.render("Score: "+str(score), 1,(255, 198, 0, 255))
@@ -67,7 +67,7 @@ def drawObstacles(obs):
 
 def removeObstacles(obs):
   for ob in obs:
-    if ob.centerx <= -26:
+    if ob.centerx <= -26 or not isAlive:
         hookList.remove(ob)
   return obs
 
@@ -211,7 +211,8 @@ while True:
           sys.exit()
 
         if event.type == SPAWNHOOK:
-          hookList.extend(obstacles())       
+          if isAlive:
+            hookList.extend(obstacles())       
 
         if event.type == pygame.KEYDOWN:
           if event.key == pygame.K_SPACE and not isJumping:
@@ -231,6 +232,8 @@ while True:
             isAlive = True
             P1 = fish.Player()
             SCORE = 0
+            for hook in hookList:
+              hookList.remove(hook)
     
     screen.blit(background, (0,0)) 
     screen.blit(ground, (0,525))
@@ -247,7 +250,7 @@ while True:
       isAlive = checkCollision(hookList) 
       newScore = scoreUpdate(hookList,SCORE)
       SCORE += newScore
-      menus(SCORE,gameState)
+      menus(SCORE,HIGHSCORE,gameState)
       checkColour(SCORE)
 
     else:
@@ -256,7 +259,7 @@ while True:
       HIGHSCORE = updateHighScore(HIGHSCORE,SCORE)
       if(HIGHSCORE < SCORE):
         HIGHSCORE = SCORE
-      menus(SCORE, gameState)
+      menus(SCORE,HIGHSCORE, gameState)
           
   
     pygame.display.update()
