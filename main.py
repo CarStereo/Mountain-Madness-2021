@@ -24,15 +24,13 @@ def menus(score, state):
   else:
     return
 
-def startmenu():
-  return
+  
 
 def scoreUpdate(obs):
   #obs is an array of the obstacles
   #add points if an obstacle makes it past the fishes postion
   for ob in obs:
     if ob.centerx < SCREEN_WIDTH / 4 and ob.centerx > (SCREEN_WIDTH /4) - 10:
-      print("good job")
       return 5
   return 0
 
@@ -105,6 +103,8 @@ SPEED = 5
 #setting up images
 background = pygame.image.load("ASSETS/background.png")
 background = pygame.transform.scale(background,(SCREEN_WIDTH,SCREEN_HEIGHT))
+startMenu = pygame.image.load("ASSETS/menu.png")
+startMenu = pygame.transform.scale(startMenu,(SCREEN_WIDTH,SCREEN_HEIGHT))
 ground = pygame.image.load("ASSETS/ground.png")
 floor_x_pos = 0
 gameOver = pygame.image.load("ASSETS/gameover.png")
@@ -136,13 +136,20 @@ inMenu = True
 while inMenu:
   #start menu
   for event in pygame.event.get():    
-        if event.type == QUIT:
-          pygame.quit()
-          sys.exit()    
-
-        if event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_SPACE:
-            inMenu = False   
+    if event.type == QUIT:
+      pygame.quit()
+      sys.exit()    
+    
+    if event.type == pygame.KEYDOWN:
+      if event.key == pygame.K_SPACE:
+        inMenu = False
+  
+  screen.blit(background, (0,0)) 
+  screen.blit(ground, (0,525))
+  screen.blit(startMenu, (0,0)) 
+  pygame.display.update()
+  FramePerSec.tick(FPS)
+  
 
 while True:
   #Cycles through all events occurring  
@@ -186,6 +193,7 @@ while True:
       gameState = 'game over'
       if HIGHSCORE < SCORE:
         HIGHSCORE = SCORE
+        updateHighScore(HIGHSCORE)
       menus(SCORE, gameState)
   
     pygame.display.update()
