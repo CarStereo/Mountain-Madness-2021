@@ -9,14 +9,15 @@ def texts(score):
   font=pygame.font.Font(None,30)
   scoretext=font.render("Score: "+str(score), 1,(0,0,0))
   screen.blit(scoretext, (0, 0))
+
 def sand_floor():
 	screen.blit(ground,(floor_x_pos,900))
 	screen.blit(ground,(floor_x_pos + 576,900))
 
 def obstacles():
-  obstacles_position = random.choice(pipe_height)
-  seaweed = ob_surface.get_rect(midhook = (700, obstacles_position))
-  hook = ob_surface.get_rect(midseaweed = (700,obstacles_position - 300))
+  obstacles_position = random.choice(obstacles_height)
+  seaweed = fish_hook.get_rect(midhook = (700, obstacles_position))
+  hook = fish_hook.get_rect(midseaweed = (700,obstacles_position - 300))
   return seaweed, hook
 
 def move_obtacles(obs):
@@ -28,9 +29,9 @@ def move_obtacles(obs):
 def draw_obtacles(obs):
   for ob in obs:
     if ob.bottom >= 1024:
-      screen.blit(ob_surface, ob)
+      screen.blit(fish_hook, ob)
     else:
-      flip_ob = pygame.transform.flip(ob_surface, False, True)
+      flip_ob = pygame.transform.flip(fish_hook, False, True)
       screen.blit(flip_ob,ob)
 
 def check_collision(obs):
@@ -45,7 +46,6 @@ def check_collision(obs):
       return False
     
     return True
-
 #Initializing 
 pygame.init()
  
@@ -55,7 +55,7 @@ FramePerSec = pygame.time.Clock()
  
 #screen
 SCREEN_WIDTH = 450
-SCREEN_HEIGHT = 800
+SCREEN_HEIGHT = 600
 SPEED = 5
 SCORE = 0
  
@@ -63,13 +63,19 @@ SCORE = 0
 background = pygame.image.load("ASSETS/background.png")
 background = pygame.transform.scale(background,(SCREEN_WIDTH,SCREEN_HEIGHT))
 ground = pygame.image.load("ASSETS/ground.png")
+floor_x_pos = 0
 gameOver = pygame.image.load("ASSETS/gameover.png")
 mainTitle = pygame.image.load("ASSETS/flippyfish.png")
+fish_hook = pygame.image.load("ASSETS/Fish Hook.png")
 
 #Create a white screen 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-
 pygame.display.set_caption("Game")
+
+#Getting Obstacles to work
+create_hook= pygame.USEREVENT
+pygame.time.set_timer(create_hook,1200)
+obstacles_height = [400,600,800]
 
 #creating the fish
 P1 = fish.Player()
@@ -95,7 +101,13 @@ while True:
     screen.blit(background, (0,0))     
     texts(SCORE)
     screen.blit(P1.image,P1.rect)
+    screen.blit(fish_hook, (0,-300))
+    screen.blit(ground, (0,500))
+    screen.blit(P1.image,P1.rect)
+
     P1.rect.centery += velocity
     pygame.display.update()
     FramePerSec.tick(FPS)
+
+
 
