@@ -46,16 +46,6 @@ def check_collision(obs):
       return False
     
     return True
-
-def rotate_bird(fish):
-	new_fish = pygame.transform.rotozoom(fish,-fish_movement * 3,1)
-	return new_fish
-
-def fish_animation():
-	new_fish = fish_frames[fish_index]
-	new_fish_rect = new_fish.get_rect(center = (100,fish_rect.centery))
-	return new_fish,new_fish_rect
-
 #Initializing 
 pygame.init()
  
@@ -89,24 +79,32 @@ obstacles_height = [400,600,800]
 
 #creating the fish
 P1 = fish.Player()
-gravity = 5
+gravity = 3
 velocity = 0
+isJumping = False
 while True:
   #Cycles through all events occurring  
     for event in pygame.event.get():    
         if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-	
+          pygame.quit()
+          sys.exit()
+        if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_SPACE and  not isJumping:
+            isJumping = True
+          elif isJumping:
+            isJumping = False
+        if event.type == pygame.KEYUP:
+          isJumping = False
 
+    velocity = P1.jump(isJumping)
+    velocity += gravity
     screen.blit(background, (0,0))     
     texts(SCORE)
     screen.blit(P1.image,P1.rect)
     screen.blit(fish_hook, (0,-300))
     screen.blit(ground, (0,500))
-    P1.move()
-    velocity = 0
-    velocity += gravity
+    screen.blit(P1.image,P1.rect)
+
     P1.rect.centery += velocity
     pygame.display.update()
     FramePerSec.tick(FPS)

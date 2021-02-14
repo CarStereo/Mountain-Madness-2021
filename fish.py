@@ -17,11 +17,11 @@ class Player(pygame.sprite.Sprite):
     self.surf = pygame.Surface((40,40))
     self.rect = self.surf.get_rect(center = (dimensions.SCREEN_WIDTH / 4, dimensions.SCREEN_HEIGHT / 2))
   
-  def move(self):
-
-    keyPress = pygame.key.get_pressed()
-    if keyPress[K_SPACE]:
-      self.rect.move_ip(0,-20)
+  def jump(self, key):
+    if key == True:
+      return -20
+    elif key == False:
+      return 0
 
 
 
