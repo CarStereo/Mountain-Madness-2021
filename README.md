@@ -1,8 +1,8 @@
 # Mountain-Madness-2021
 
-Team Name: School of Floppers
-Team Members: Sunil Mann, Chance Wijewardena, Elaine Luu, Megan Poteryko, Akash Malhi
-Date: 2021-02-13
+- Team Name: School of Floppers
+- Team Members: Sunil Mann, Chance Wijewardena, Elaine Luu, Megan Poteryko, Akash Malhi
+- Date: 2021-02-13
 
 For our group project, we decided to create a game based on the FAMOUS book called "One Fish, Two Fish, Red Fish, Blue Fish" by the well known author, Dr. Seuss.  
 
