@@ -87,12 +87,19 @@ def checkCollision(obs):
   return True
 
 def updateHighScore(hs,s):
+  #create a new file if there isnt one
+  #if the hgih score is less than the new score
+  #   overwrite what is on the file as the new high score
+  #   return the new hs
+  #else check if the file is empty
+  #if it is then write a new hs and return s
+  #else, return the old hs from the file
   file = open("scores.txt", "w")
   if(hs < s):
     file.truncate()
     file.write(str(hs))
     file.close()
-    return hs
+    return s
   else:
     filesize = os.path.getsize("scores.txt")
     if filesize == 0:
