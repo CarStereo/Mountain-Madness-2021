@@ -6,9 +6,10 @@ import fish
 #import score
 
 def texts(score):
-  font=pygame.font.Font(None,30)
-  scoretext=font.render("Score: "+str(score), 1,(0,0,0))
-  screen.blit(scoretext, (SCREEN_WIDTH/2, 0))
+  font = pygame.font.Font("GrinchedRegular.otf", 30)
+  scoretext = font.render("Score: "+str(score), 1,(255, 198, 0, 255))
+  scoreRect = scoretext.get_rect(center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/8))
+  screen.blit(scoretext, scoreRect)
 
 def sand_floor():
 	screen.blit(ground,(floor_x_pos,900))
