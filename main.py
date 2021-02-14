@@ -1,5 +1,5 @@
 #
-import pygame, sys
+import pygame, sys, os
 from pygame.locals import *
 import random, time
 import fish
@@ -78,6 +78,25 @@ def checkCollision(obs):
     
   return True
 
+def updateHighScore(hs,s):
+  file = open("scores.txt", "w")
+  if(hs < s):
+    file.truncate()
+    file.write(str(hs))
+    file.close()
+    return hs
+  else:
+    filesize = os.path.getsize("scores.txt")
+    if filesize == 0:
+      file.truncate()
+      file.write(str(s))
+      file.close()
+      return s
+    else:
+      oldHs = file.read()
+      return oldHs
+
+
 #do not know if we are going to implement
 def rotate_bird(fish):
 	P1 = pygame.transform.rotozoom(fish,-fish_movement * 3,1)
@@ -132,24 +151,28 @@ isJumping = False
 #score tracking
 SCORE = 0
 HIGHSCORE = 0
-inMenu = True
-while inMenu:
-  #start menu
-  for event in pygame.event.get():    
-    if event.type == QUIT:
-      pygame.quit()
-      sys.exit()    
+
+sMenu = True
+
+def startUp(inMenu):
+  while inMenu:
+    #start menu
+    for event in pygame.event.get():    
+      if event.type == QUIT:
+        pygame.quit()
+        sys.exit()    
+      
+      if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_SPACE:
+          inMenu = False
     
-    if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_SPACE:
-        inMenu = False
+    screen.blit(background, (0,0)) 
+    screen.blit(ground, (0,525))
+    screen.blit(startMenu, (0,0)) 
+    pygame.display.update()
+    FramePerSec.tick(FPS)
   
-  screen.blit(background, (0,0)) 
-  screen.blit(ground, (0,525))
-  screen.blit(startMenu, (0,0)) 
-  pygame.display.update()
-  FramePerSec.tick(FPS)
-  
+startUp(sMenu)
 
 while True:
   #Cycles through all events occurring  
@@ -165,6 +188,7 @@ while True:
           if event.key == pygame.K_SPACE and not isJumping:
             gameState = 'main game'
             isJumping = True
+            
           elif isJumping:
             isJumping = False
         if event.type == pygame.KEYUP:
@@ -191,11 +215,9 @@ while True:
     else:
       #bird died
       gameState = 'game over'
-      if HIGHSCORE < SCORE:
-        HIGHSCORE = SCORE
-        updateHighScore(HIGHSCORE)
+      HIGHSCORE = updateHighScore(HIGHSCORE,SCORE)
       menus(SCORE, gameState)
+
   
     pygame.display.update()
     FramePerSec.tick(FPS)
-    
