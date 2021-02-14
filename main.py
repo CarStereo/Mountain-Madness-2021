@@ -99,12 +99,13 @@ P1 = fish.Player()
 gravity = 5
 velocity = 0
 fish_movement = 0
+isJumping = False
 while True:
   #Cycles through all events occurring  
     for event in pygame.event.get():    
         if event.type == QUIT:
-        pygame.quit()
-        sys.exit()
+          pygame.quit()
+          sys.exit()
 
         if event.type == SPAWNHOOK:
           hookList.extend(obstacles())
