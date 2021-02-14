@@ -73,7 +73,7 @@ pygame.display.set_caption("Game")
 
 #creating the fish
 P1 = fish.Player()
-gravity = 5
+gravity = 3
 velocity = 0
 isJumping = False
 while True:
@@ -91,9 +91,7 @@ while True:
           isJumping = False
 
     velocity = P1.jump(isJumping)
-    if velocity == 0:
-      jumpTime = 0
-      velocity += gravity
+    velocity += gravity
     screen.blit(background, (0,0))     
     texts(SCORE)
     screen.blit(P1.image,P1.rect)

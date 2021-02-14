@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
   def jump(self, key):
     if key == True:
       return -20
-    else:
+    elif key == False:
       return 0
 
 
