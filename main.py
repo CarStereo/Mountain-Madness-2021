@@ -106,21 +106,11 @@ def updateHighScore(hs,s):
 
 
 #do not know if we are going to implement
-def rotate_bird(fish):
-	P1 = pygame.transform.rotozoom(fish,-fish_movement * 3,1)
-	return P1
-
-def fish_animation():
-	P1 = fish_frames[fish_index]
-	new_P1.rect = P1.get_rect(center = (100,P1.rect.centery))
-	return P1,new_P1.rect
-
-def paused():
-
-  largeText = pygame.font.SysFont("comicsansms",115)
-  TextSurf, TextRect = text_objects("Paused", largeText)
-  TextRect.center = ((display_width/2),(display_height/2))
-  gameDisplay.blit(TextSurf, TextRect)
+def paused(pause):
+  font = pygame.font.Font("ASSETS/GrinchedRegular.otf", 30)
+  textSurf = font.render("Paused", 1,(255, 198, 0, 255))
+  textRect = textSurf.get_rect(center = ((SCREEN_WIDTH/2),(SCREEN_HEIGHT/2)))
+  screen.blit(textSurf, textRect)
 
 
   while pause:
@@ -129,15 +119,11 @@ def paused():
           if event.type == pygame.QUIT:
               pygame.quit()
               quit()
-
+          if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p and not isJumping:
+              pause = False
         #gameDisplay.fill(white)
-
-
-      button("Continue",150,450,100,50,green,bright_green,unpause)
-      button("Quit",550,450,100,50,red,bright_red,quitgame)
-
       pygame.display.update()
-      clock.tick(15)
 
 #Initializing 
 pygame.init()
@@ -232,7 +218,7 @@ while True:
         if event.type == pygame.KEYDOWN:
           if event.key == pygame.K_p:
             pause = True
-            paused()
+            paused(pause)
     
     screen.blit(background, (0,0)) 
     screen.blit(ground, (0,525))
@@ -256,9 +242,15 @@ while True:
       #bird died
       gameState = 'game over'
       HIGHSCORE = updateHighScore(HIGHSCORE,SCORE)
-      HIGHSCORE = SCORE
+      if(HIGHSCORE < SCORE):
+        HIGHSCORE = SCORE
       menus(SCORE, gameState)
-
+      for event in pygame.event.get(): 
+         if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_ESCAPE and not isAlive:
+            gameState = 'main game'
+            SCORE = 0
+            isAlive = True
   
     pygame.display.update()
     FramePerSec.tick(FPS)
