@@ -21,7 +21,9 @@ class Player(pygame.sprite.Sprite):
 
     keyPress = pygame.key.get_pressed()
     if keyPress[K_SPACE]:
-      self.rect.move_ip(0,-20)
+      return -20
+    else:
+      return 0
 
 
 

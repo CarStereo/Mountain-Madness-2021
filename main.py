@@ -46,15 +46,6 @@ def check_collision(obs):
     
     return True
 
-def rotate_bird(fish):
-	new_fish = pygame.transform.rotozoom(fish,-fish_movement * 3,1)
-	return new_fish
-
-def fish_animation():
-	new_fish = fish_frames[fish_index]
-	new_fish_rect = new_fish.get_rect(center = (100,fish_rect.centery))
-	return new_fish,new_fish_rect
-
 #Initializing 
 pygame.init()
  
@@ -84,6 +75,7 @@ pygame.display.set_caption("Game")
 P1 = fish.Player()
 gravity = 5
 velocity = 0
+
 while True:
   #Cycles through all events occurring  
     for event in pygame.event.get():    
@@ -94,9 +86,9 @@ while True:
     screen.blit(background, (0,0))     
     texts(SCORE)
     screen.blit(P1.image,P1.rect)
-    P1.move()
-    velocity = 0
-    velocity += gravity
+    velocity = P1.move()
+    if velocity == 0:
+      velocity += gravity
     P1.rect.centery += velocity
     pygame.display.update()
     FramePerSec.tick(FPS)
