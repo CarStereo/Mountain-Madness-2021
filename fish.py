@@ -14,6 +14,10 @@ class Player(pygame.sprite.Sprite):
   def __init__(self):
     super().__init__()
     self.image = pygame.image.load("ASSETS/YellowFish.png")
+    self.image = pygame.image.load("ASSETS/Orange Fish.png")
+    self.image = pygame.image.load("ASSETS/Green Fish.png")
+    self.image = pygame.image.load("ASSETS/Purple Fish.png")
+    self.image = pygame.image.load("ASSETS/Full Green Fish.png")
     self.image = pygame.transform.scale2x(self.image)
     self.surf = pygame.Surface((40,40))
     self.rect = self.surf.get_rect(center = (dimensions.SCREEN_WIDTH / 4, dimensions.SCREEN_HEIGHT / 2))
