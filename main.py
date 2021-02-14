@@ -219,6 +219,10 @@ while True:
           if event.key == pygame.K_p:
             pause = True
             paused(pause)
+          if event.key == pygame.K_ESCAPE and not isAlive:
+            gameState = 'main game'
+            SCORE = 0
+            isAlive = True
     
     screen.blit(background, (0,0)) 
     screen.blit(ground, (0,525))
@@ -245,12 +249,7 @@ while True:
       if(HIGHSCORE < SCORE):
         HIGHSCORE = SCORE
       menus(SCORE, gameState)
-      for event in pygame.event.get(): 
-         if event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_ESCAPE and not isAlive:
-            gameState = 'main game'
-            SCORE = 0
-            isAlive = True
+          
   
     pygame.display.update()
     FramePerSec.tick(FPS)
