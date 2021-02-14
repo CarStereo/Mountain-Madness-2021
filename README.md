@@ -15,6 +15,6 @@ STEPS:
         OR
 - install pip pygame (if you haven't already)
 - download and unzip main.py, fish.py, dimensions.py and the assets and sfx directories
-- run in main.py
+- run main.py
 
 Video Presentation:
