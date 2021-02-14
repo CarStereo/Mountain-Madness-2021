@@ -75,11 +75,13 @@ def checkCollision(obs):
   global death
   for ob in obs:
     if P1.rect.colliderect(ob):
+      hitSound.play()
       #print("you die")
       death = True
       return False
 
     if P1.rect.top <= 0 or P1.rect.bottom >= 600:
+      hitSound.play()
       #print("out of bounds")
       death = True
       return False
@@ -181,6 +183,9 @@ HIGHSCORE = 0
 
 sMenu = True
 
+swimSound = pygame.mixer.Sound('sfx/sfx_swim.wav')
+hitSound = pygame.mixer.Sound('sfx/sfx_hit.wav')
+
 def startUp(inMenu):
   while inMenu:
     #start menu
@@ -214,6 +219,7 @@ while True:
 
         if event.type == pygame.KEYDOWN:
           if event.key == pygame.K_SPACE and not isJumping:
+            swimSound.play()
             gameState = 'main game'
             isJumping = True
           elif isJumping:
